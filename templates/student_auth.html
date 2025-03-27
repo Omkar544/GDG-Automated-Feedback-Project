@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-8">
+    <h1 class="text-3xl font-bold mb-6">Student Panel</h1>
+
+    <!-- Student Login Form -->
+    <form action="{{ url_for('login') }}" method="post" class="bg-white p-6 rounded-lg shadow-md w-96 mb-6">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Login</h2>
+        <input type="text" name="username" placeholder="Username" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="password" name="password" placeholder="Password" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="hidden" name="role" value="student">
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700">Login</button>
+    </form>
+
+    <!-- Student Registration Form -->
+    <form action="{{ url_for('register') }}" method="post" class="bg-white p-6 rounded-lg shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-4 text-gray-800">Register</h2>
+        <input type="text" name="student_name" placeholder="Student Name" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="text" name="roll_no" placeholder="Roll Number" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <select name="class" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+            <option value="" disabled selected>Select Class</option>
+            <option value="7th Standard">7th Standard</option>
+            <option value="8th Standard">8th Standard</option>
+            <option value="9th Standard">9th Standard</option>
+            <option value="10th Standard">10th Standard</option>
+        </select>
+        <input type="text" name="mobile_no" placeholder="Mobile Number" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="email" name="email" placeholder="Email" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="text" name="username" placeholder="Username" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="password" name="password" placeholder="Password" required class="w-full p-2 border border-gray-300 rounded-lg text-gray-800 mb-4">
+        <input type="hidden" name="role" value="student">
+        <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-700">Register</button>
+    </form>
+
+    <!-- Back to Home Button -->
+    <a href="{{ url_for('index') }}" class="mt-6 px-6 py-3 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-700">Back to Home</a>
+</body>
+</html>

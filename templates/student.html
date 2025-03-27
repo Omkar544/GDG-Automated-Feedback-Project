@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
+    <h1 class="text-3xl font-bold mb-6 flex items-center">
+        <img src="{{ url_for('static', filename='student_logo.jpg') }}" alt="Student" class="w-12 h-12 mr-3">
+        Student Panel
+    </h1>
+
+    <!-- Available Assignments Table -->
+    <h2 class="text-2xl font-semibold mt-8">Available Assignments</h2>
+    <table class="mt-4 w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <tr class="bg-gray-200">
+            <th class="p-3">Assignment</th>
+            <th class="p-3">Subject</th>
+            <th class="p-3">Uploaded Date</th>
+            <th class="p-3">Download</th>
+            <th class="p-3">Submit Answer</th>
+        </tr>
+        {% for assignment in teacher_assignments %}
+        <tr class="border-b">
+            <td class="p-3">{{ assignment.filename }}</td>
+            <td class="p-3">{{ assignment.subject }}</td>
+            <td class="p-3">{{ assignment.date }}</td>
+            <td class="p-3">
+                <a href="{{ url_for('uploaded_file', folder='teacher', filename=assignment.filename) }}" target="_blank" class="text-blue-500">Download</a>
+            </td>
+            <td class="p-3">
+                <form action="{{ url_for('submit_assignment', assignment_id=assignment.id) }}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" required class="w-full p-2 border border-gray-300 rounded-lg">
+                    <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-700">Submit Answer</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- My Submissions Table -->
+    <h2 class="text-2xl font-semibold mt-8">My Submissions</h2>
+    <table class="mt-4 w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <tr class="bg-gray-200">
+            <th class="p-3">Assignment</th>
+            <th class="p-3">Subject</th>
+            <th class="p-3">Submitted Date</th>
+            <th class="p-3">Feedback</th>
+            <th class="p-3">Marks</th>
+            <th class="p-3">Download</th>
+        </tr>
+        {% for submission in student_submissions %}
+        <tr class="border-b">
+            <td class="p-3">{{ submission.assignment_filename }}</td>
+            <td class="p-3">{{ submission.subject }}</td>
+            <td class="p-3">{{ submission.date }}</td>
+            <td class="p-3">
+                {% for line in submission.feedback.split('\n') %}
+                    <div>{{ line|safe }}</div>
+                {% endfor %}
+            </td>
+            <td class="p-3">{{ submission.marks }}/10</td>
+            <td class="p-3">
+                <a href="{{ url_for('uploaded_file', folder='student', filename=submission.filename) }}" target="_blank" class="text-blue-500">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}" class="mt-6 px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-700">Logout</a>
+</body>
+</html>

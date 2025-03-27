@@ -1,0 +1,52 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+button {
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    opacity: 0.8;x
+}
+
+.feedback-section {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-left: 4px solid #3498db;
+    background-color: #f8f9fa;
+}
+
+.feedback-section h5 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-list {
+    margin-left: 1.5rem;
+    list-style-type: circle;
+}
+/* Feedback styling */
+.feedback-content {
+    margin: 10px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.feedback-point {
+    margin: 8px 0;
+    padding-left: 20px;
+    text-indent: -15px;
+    line-height: 1.5;
+}
+
+.feedback-point::before {
+    content: "•";
+    margin-right: 8px;
+    color: #2c3e50;
+    font-weight: bold;
+}

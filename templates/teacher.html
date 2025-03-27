@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .feedback-point {
+            padding-left: 1.5rem;
+            text-indent: -1.2rem;
+            margin: 0.25rem 0;
+        }
+        .feedback-point::before {
+            content: "•";
+            margin-right: 0.5rem;
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-8">
+    <h1 class="text-3xl font-bold mb-6 flex items-center">
+        <img src="{{ url_for('static', filename='teacher_logo.jpeg') }}" alt="Teacher" class="w-12 h-12 mr-3">
+        Teacher Panel
+    </h1>
+
+    <!-- Upload Assignment Form -->
+    <form action="{{ url_for('upload_teacher') }}" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded-lg w-96">
+        <select name="class" required class="w-full mb-2 p-2 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Select Class</option>
+            <option value="7th Standard">7th Standard</option>
+            <option value="8th Standard">8th Standard</option>
+            <option value="9th Standard">9th Standard</option>
+            <option value="10th Standard">10th Standard</option>
+        </select>
+
+        <select name="subject" required class="w-full mb-2 p-2 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Select Subject</option>
+            <option value="Math">Math</option>
+            <option value="English">English</option>
+            <option value="Science">Science</option>
+            <option value="History">History</option>
+            <option value="Geography">Geography</option>
+        </select>
+
+        <input type="file" name="file" required class="w-full mb-4 p-2 border border-gray-300 rounded-lg">
+        
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700">Upload Assignment</button>
+    </form>
+
+    <!-- Student Submissions Table -->
+    <h2 class="text-2xl font-semibold mt-8">Student Submissions</h2>
+    <div class="w-full overflow-x-auto">
+        <table class="mt-4 w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Class</th>
+                    <th class="p-3">Roll No</th>
+                    <th class="p-3">Assignment</th>
+                    <th class="p-3">Submitted Date</th>
+                    <th class="p-3 min-w-[300px]">Feedback</th>
+                    <th class="p-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in student_submissions %}
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-3">{{ submission.name }}</td>
+                    <td class="p-3">{{ submission.class }}</td>
+                    <td class="p-3">{{ submission.roll_no }}</td>
+                    <td class="p-3"><a href="{{ url_for('uploaded_file', folder='student', filename=submission.filename) }}" target="_blank" class="text-blue-500 hover:underline">View</a></td>
+                    <td class="p-3">{{ submission.date }}</td>
+                    <td class="p-3 align-top">
+                        <div class="feedback-section">
+                            <div class="feedback-content space-y-1">
+                                {% for line in submission.feedback.split('\n') %}
+                                    <div class="feedback-point">{{ line|safe }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-3">
+                        <form action="{{ url_for('generate_feedback', submission_id=submission.id) }}" method="post">
+                            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                Generate Feedback
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}" class="mt-6 px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-700 transition-colors">
+        Logout
+    </a>
+</body>
+</html>
