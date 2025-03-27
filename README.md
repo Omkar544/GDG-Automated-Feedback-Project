@@ -22,3 +22,4 @@ An intelligent web application that automates assignment evaluation using AI, su
 | **Utilities**  | PyPDF2, python-docx, OpenCV, NumPy                                           |
 | **DevOps**     | Git, pip                                             |
 
+https://github.com/Omkar544/GDG-Automated-Feedback-Project.git
